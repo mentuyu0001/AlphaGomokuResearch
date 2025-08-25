@@ -1,0 +1,64 @@
+[
+  {
+    "Name": "rulebase",
+    "Stats": {
+      "Label": "rulebase",
+      "WinCount": [
+        18,
+        17
+      ],
+      "LossCount": [
+        0,
+        0
+      ],
+      "DrawCount": [
+        0,
+        0
+      ],
+      "TotalWinCount": 35,
+      "TotalLossCount": 0,
+      "TotalDrawCount": 0,
+      "TotalGameCount": 35,
+      "TotalWinRate": 1,
+      "GameCountWhenBlack": 18,
+      "GameCountWhenWhite": 17,
+      "WinRateWhenBlack": 1,
+      "WinRateWhenWhite": 1
+    },
+    "Engine": {
+      "Name": "rulebase",
+      "IsRunning": true
+    }
+  },
+  {
+    "Name": "random",
+    "Stats": {
+      "Label": "random",
+      "WinCount": [
+        0,
+        0
+      ],
+      "LossCount": [
+        17,
+        18
+      ],
+      "DrawCount": [
+        0,
+        0
+      ],
+      "TotalWinCount": 0,
+      "TotalLossCount": 35,
+      "TotalDrawCount": 0,
+      "TotalGameCount": 35,
+      "TotalWinRate": 0,
+      "GameCountWhenBlack": 17,
+      "GameCountWhenWhite": 18,
+      "WinRateWhenBlack": 0,
+      "WinRateWhenWhite": 0
+    },
+    "Engine": {
+      "Name": "random",
+      "IsRunning": true
+    }
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "BoardSize": 9,
+  "TimeLimitMsPerMove": 5000,
+  "SwapPlayer": true,
+  "UseSamePositionWhenSwapPlayer": true,
+  "OpeningPositionsPath": "openings.txt",
+  "ShuffleOpenings": true,
+  "GameLogPath": "game.txt",
+  "GameStatsPath": "stats.json",
+  "ViewerPath": "/usr/local/bin/python3",
+  "ViewerArgs": "/Users/takahashi_shota/Library/CloudStorage/GoogleDrive-shota.takahashi.3n@stu.hosei.ac.jp/マイドライブ/gomoku_9x9/publish/board_viewer.py"
+}
