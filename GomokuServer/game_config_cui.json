@@ -1,0 +1,12 @@
+{
+  "BoardSize": 9,
+  "TimeLimitMsPerMove": 1000,
+  "SwapPlayer": true,
+  "UseSamePositionWhenSwapPlayer": true,
+  "OpeningPositionsPath": "openings.txt",
+  "ShuffleOpenings": true,
+  "GameLogPath": "game.txt",
+  "GameStatsPath": "stats.json",
+  "ViewerPath": "",
+  "ViewerArgs": ""
+}

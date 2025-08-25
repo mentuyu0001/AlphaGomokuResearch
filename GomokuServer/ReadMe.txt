@@ -1,0 +1,3 @@
+openings.txt: 新人研修で用いる256通りの初期局面が記載されている。game_config.jsonで指定することで、各対局時にこれらの局面からランダムにサンプリングされる。
+game_config_template.json: 対局の設定を記述するファイルのテンプレート。
+engine_config_template.json: 思考エンジン(AI)の設定を記述するファイルのテンプレート。

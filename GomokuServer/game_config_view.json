@@ -1,0 +1,12 @@
+{
+  "BoardSize": 9,
+  "TimeLimitMsPerMove": 1000,
+  "SwapPlayer": true,
+  "UseSamePositionWhenSwapPlayer": true,
+  "OpeningPositionsPath": "openings.txt",
+  "ShuffleOpenings": true,
+  "GameLogPath": "game.txt",
+  "GameStatsPath": "stats.json",
+  "ViewerPath": "C:\\Users\\sudok\\AppData\\Local\\Programs\\Python\\Python39\\python.exe",
+  "ViewerArgs": "C:\\Users\\sudok\\Desktop\\master_research_Miyazaki\\gomoku\\GomokuServer\\GomokuServer-main\\GomokuServer-main\\board_viewer.py"
+}

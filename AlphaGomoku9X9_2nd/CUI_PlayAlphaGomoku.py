@@ -318,7 +318,7 @@ if __name__ == '__main__':
             elif mode == '6': game_loop(rule_based_player(), ai)
             elif mode == '7': game_loop(random_player(), rule_based_player())
             elif mode == '8': game_loop(rule_based_player(), random_player())
-            elif mode == '9': calculate_win_rate(ai, rule_based_player(), num_games=50)
+            elif mode == '9': calculate_win_rate(ai, rule_based_player(), num_games=10)
             elif mode == '10': calculate_win_rate(random_player(), rule_based_player(), num_games=50)
         elif mode == '11':
             game_loop(random_player(), random_player())
