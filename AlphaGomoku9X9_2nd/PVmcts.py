@@ -13,6 +13,7 @@ import os
 from math import sqrt
 import LearningParameters
 import numba
+import time
 
 
 # シミュレーション回数
@@ -241,6 +242,103 @@ def pv_mcts_scores(model, state, temperature):
     visit_counts = np.array([child.n for child in root_node.child_nodes])
     if np.sum(visit_counts) == 0:
         return np.array([])
+
+    return visit_counts / np.sum(visit_counts)
+
+# 指定時間動かし続けてスコアを取得する
+def pv_mcts_scores_by_time(model, state, time_limit_ms, temperature=0):
+    """
+    指定された時間までMCTSを実行し、スコアを返す。
+    サーバーとの通信で使用することを想定。
+    """
+    # ゲーム終了時は探索しない
+    if state.is_done():
+        return np.array([])
+
+    # Nodeクラスの定義 (pv_mcts_scores内から移動、あるいは共通化)
+    class Node:
+        def __init__(self, state, p, parent=None):
+            self.state = state
+            self.p = p
+            self.w = 0
+            self.n = 0
+            self.parent = parent
+            self.child_nodes = None
+        
+        def select_child(self):
+            c_puct = LearningParameters.C_PUCT
+            w_np = np.array([child.w for child in self.child_nodes], dtype=np.float32)
+            n_np = np.array([child.n for child in self.child_nodes], dtype=np.float32)
+            p_np = np.array([child.p for child in self.child_nodes], dtype=np.float32)
+            t_sqrt = sqrt(self.n)
+            best_child_index = find_best_child_jit(w_np, n_np, p_np, c_puct, t_sqrt)
+            return self.child_nodes[best_child_index]
+
+    # --- MCTSのメイン処理 ---
+    # (1) 探索の準備
+    root_node = Node(state, 0)
+    sim_count = 0 # 実行したシミュレーション回数を記録
+
+    # (2) 思考時間の設定
+    time_limit_sec = time_limit_ms / 1000.0
+    # 処理時間を考慮し、少し早めに探索を打ち切るマージンを設定
+    margin = 0.05 
+    end_time = time.monotonic() + time_limit_sec - margin
+
+    # (3) 時間切れまでシミュレーションを実行
+    while time.monotonic() < end_time:
+        node = root_node
+        
+        # Selection
+        while node.child_nodes is not None:
+            node = node.select_child()
+
+        # Expansion & Evaluation
+        if not node.state.is_done():
+            policies, value = predict(model, node.state)
+            
+            # ディリクレノイズは学習時のみ有効 (temperature > 0)
+            if node.parent is None and temperature > 0 and policies.size > 0:
+                alpha, epsilon = 0.3, 0.25
+                noise = np.random.dirichlet([alpha] * len(policies))
+                policies = (1 - epsilon) * policies + epsilon * noise
+
+            node.child_nodes = []
+            for action, p in zip(node.state.legal_actions(), policies):
+                node.child_nodes.append(Node(node.state.next(action), p, parent=node))
+        
+        # ゲーム終了局面の価値
+        else:
+            # 価値を反転させているのは、AIが最弱手を選ぶ問題を修正するため
+            if node.state.is_lose(): value = 1.0
+            elif node.state.is_draw(): value = 0.5
+            else: value = 0.0
+
+        # Backup
+        while node is not None:
+            node.w += value
+            node.n += 1
+            node = node.parent
+            value = 1 - value # 親の視点に価値を反転
+        
+        sim_count += 1 # シミュレーション回数をカウント
+
+    # デバッグ用に実行回数をログに出力
+    # print(f"Time limit: {time_limit_ms}ms, Simulations: {sim_count}", file=sys.stderr)
+            
+    # --- 探索結果から方策(訪問回数の比率)を計算 ---
+    if not root_node.child_nodes:
+        return np.array([])
+        
+    visit_counts = np.array([child.n for child in root_node.child_nodes])
+    if np.sum(visit_counts) == 0:
+        # 万が一、1回もシミュレーションが実行できなかった場合
+        # 合法手の中からランダムに手を選ぶための均等な方策を返す
+        legal_actions_count = len(state.legal_actions())
+        if legal_actions_count > 0:
+            return np.ones(legal_actions_count) / legal_actions_count
+        else:
+            return np.array([])
 
     return visit_counts / np.sum(visit_counts)
 
