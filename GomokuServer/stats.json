@@ -4,12 +4,12 @@
     "Stats": {
       "Label": "MiyazakiAlphaGomoku",
       "WinCount": [
-        0,
-        1
+        1,
+        0
       ],
       "LossCount": [
-        4,
-        4
+        3,
+        5
       ],
       "DrawCount": [
         1,
@@ -22,8 +22,8 @@
       "TotalWinRate": 0.15,
       "GameCountWhenBlack": 5,
       "GameCountWhenWhite": 5,
-      "WinRateWhenBlack": 0.1,
-      "WinRateWhenWhite": 0.2
+      "WinRateWhenBlack": 0.3,
+      "WinRateWhenWhite": 0
     },
     "Engine": {
       "Name": "MiyazakiAlphaGomoku",
@@ -35,12 +35,12 @@
     "Stats": {
       "Label": "M2Takahasi",
       "WinCount": [
-        4,
-        4
+        5,
+        3
       ],
       "LossCount": [
-        1,
-        0
+        0,
+        1
       ],
       "DrawCount": [
         0,
@@ -53,8 +53,8 @@
       "TotalWinRate": 0.85,
       "GameCountWhenBlack": 5,
       "GameCountWhenWhite": 5,
-      "WinRateWhenBlack": 0.8,
-      "WinRateWhenWhite": 0.9
+      "WinRateWhenBlack": 1,
+      "WinRateWhenWhite": 0.7
     },
     "Engine": {
       "Name": "M2Takahasi",
